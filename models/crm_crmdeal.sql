@@ -35,12 +35,12 @@ SELECT
     ("{{ var("table_prefix") }}_deals".properties->'hs_is_closed_won')::boolean as is_won,
     "{{ var("table_prefix") }}_deals".properties->'hs_mrr' as mrr,
     "{{ var("table_prefix") }}_deals".properties->'hs_priority' as priority
-FROM "{{ var("table_prefix") }}_deals"
-LEFT JOIN _airbyte_raw_{{ var("table_prefix") }}_deals
+FROM "{{ var("schema") }}"."{{ var("table_prefix") }}_deals"
+LEFT JOIN "{{ var("schema") }}"._airbyte_raw_{{ var("table_prefix") }}_deals
 ON _airbyte_raw_{{ var("table_prefix") }}_deals._airbyte_ab_id = "{{ var("table_prefix") }}_deals"._airbyte_ab_id
-LEFT JOIN crm_crmcontact as contact
+LEFT JOIN "{{ var("schema") }}".crm_crmcontact as contact
 ON contact.external_id = ("{{ var("table_prefix") }}_deals".contacts->0)::text
-LEFT JOIN crm_crmcompany as company
+LEFT JOIN "{{ var("schema") }}".crm_crmcompany as company
 ON company.external_id = ("{{ var("table_prefix") }}_deals".companies->0)::text
-LEFT JOIN crm_crmuser as owner
+LEFT JOIN "{{ var("schema") }}".crm_crmuser as owner
 ON owner.external_id = ("{{ var("table_prefix") }}_deals".properties->'hubspot_owner_id')::text

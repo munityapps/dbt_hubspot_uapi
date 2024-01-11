@@ -27,8 +27,8 @@ SELECT
     )  as external_id,
     contactlist.id as contact_list_id,
     contact.id as contact_id
-FROM "{{ var("table_prefix") }}_contacts_list_memberships"
-LEFT JOIN _airbyte_raw_{{ var("table_prefix") }}_contacts_list_memberships
+FROM "{{ var("schema") }}"."{{ var("table_prefix") }}_contacts_list_memberships"
+LEFT JOIN "{{ var("schema") }}"._airbyte_raw_{{ var("table_prefix") }}_contacts_list_memberships
 ON _airbyte_raw_{{ var("table_prefix") }}_contacts_list_memberships._airbyte_ab_id = "{{ var("table_prefix") }}_contacts_list_memberships"._airbyte_ab_id
 LEFT JOIN {{ ref('crm_crmcontact') }} as contact
 ON contact.external_id::bigint = "{{ var("table_prefix") }}_contacts_list_memberships"."canonical-vid" AND contact.integration_id = '{{ var("integration_id") }}'

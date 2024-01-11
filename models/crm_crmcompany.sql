@@ -45,6 +45,6 @@ SELECT
     NULL as rating,
     COALESCE("{{ var("table_prefix") }}_companies".properties->'website', "{{ var("table_prefix") }}_companies".properties->'domain', NULL)  as website,
     "{{ var("table_prefix") }}_companies".properties->'lifecyclestage' as lifecycle
-FROM "{{ var("table_prefix") }}_companies"
-LEFT JOIN _airbyte_raw_{{ var("table_prefix") }}_companies
+FROM "{{ var("schema") }}"."{{ var("table_prefix") }}_companies"
+LEFT JOIN "{{ var("schema") }}"._airbyte_raw_{{ var("table_prefix") }}_companies
 ON _airbyte_raw_{{ var("table_prefix") }}_companies._airbyte_ab_id = "{{ var("table_prefix") }}_companies"._airbyte_ab_id

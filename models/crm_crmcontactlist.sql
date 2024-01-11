@@ -24,6 +24,6 @@ SELECT
     ("{{ var("table_prefix") }}_contact_lists".metadata->>'size')::bigint as size,
     -- NULL::bigint as size,
     NULL as campaign_id
-FROM "{{ var("table_prefix") }}_contact_lists"
-LEFT JOIN _airbyte_raw_{{ var("table_prefix") }}_contact_lists
+FROM "{{ var("schema") }}"."{{ var("table_prefix") }}_contact_lists"
+LEFT JOIN "{{ var("schema") }}"._airbyte_raw_{{ var("table_prefix") }}_contact_lists
 ON _airbyte_raw_{{ var("table_prefix") }}_contact_lists._airbyte_ab_id = "{{ var("table_prefix") }}_contact_lists"._airbyte_ab_id

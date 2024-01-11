@@ -53,8 +53,8 @@ SELECT
     "{{ var("table_prefix") }}_contacts_properties".hs_latest_source as crm_source,
     "{{ var("table_prefix") }}_contacts_properties".hs_language as languages,
     "{{ var("table_prefix") }}_contacts_properties".total_revenue as revenue
-FROM "{{ var("table_prefix") }}_contacts"
-LEFT JOIN _airbyte_raw_{{ var("table_prefix") }}_contacts
+FROM "{{ var("schema") }}"."{{ var("table_prefix") }}_contacts"
+LEFT JOIN "{{ var("schema") }}"._airbyte_raw_{{ var("table_prefix") }}_contacts
 ON _airbyte_raw_{{ var("table_prefix") }}_contacts._airbyte_ab_id = "{{ var("table_prefix") }}_contacts"._airbyte_ab_id
-LEFT JOIN {{ var("table_prefix") }}_contacts_properties
+LEFT JOIN "{{ var("schema") }}".{{ var("table_prefix") }}_contacts_properties
 ON {{ var("table_prefix") }}_contacts.id::varchar = "{{ var("table_prefix") }}_contacts_properties".hs_object_id::varchar
